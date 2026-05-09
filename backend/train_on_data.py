@@ -1,7 +1,13 @@
+# imports
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import scipy.ndimage as ndi
+
+# model metrics imports
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 # load the saved MNIST model
 model = keras.models.load_model('backend/data/mnist_model.keras')
@@ -57,6 +63,41 @@ model.fit(
     epochs=10,
     validation_data=val_data
 )
+
+
+# confusion matrix on validation set
+# get true labels and predictions from validation data
+val_data.reset()  # reset to start of data
+y_true = []
+y_pred = []
+
+for i in range(len(val_data)):
+    x_batch, y_batch = val_data[i]
+    preds = model.predict(x_batch, verbose=0)
+    y_true.extend(y_batch.astype(int))
+    y_pred.extend(np.argmax(preds, axis=1))
+
+y_true = np.array(y_true)
+y_pred = np.array(y_pred)
+
+# plot it
+cm = confusion_matrix(y_true, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=list(range(10)))
+
+fig, ax = plt.subplots(figsize=(10, 10))
+disp.plot(ax=ax, cmap='Blues', colorbar=False)
+plt.title('Confusion matrix — my handwriting validation set')
+plt.tight_layout()
+plt.show()
+
+# print the worst offenders
+print("\nMost confused pairs:")
+cm_copy = cm.copy()
+np.fill_diagonal(cm_copy, 0)  # ignore correct predictions
+for _ in range(5):
+    idx = np.unravel_index(cm_copy.argmax(), cm_copy.shape)
+    print(f"  True: {idx[0]}  →  Predicted as: {idx[1]}  ({cm_copy[idx]} times)")
+    cm_copy[idx] = 0
 
 # save the final model
 model.save('backend/data/final_model.keras')
