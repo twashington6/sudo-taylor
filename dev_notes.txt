@@ -1,36 +1,11 @@
-3/20/26
-
-want to build a sudoku app that uses, accepts, and reads my handwriting
---> javascript (next js) and python?
-
-maybe vercel app??? have option for either handwriting or typing, so that it's accesible to people without styluses
-
-generate random, solvable puzzles.
-
-db to store high score times???
-
-electron?: https://www.electronjs.org/
+5/9/26
+85% accuracy for final_model.keras (on my handwriting) acheived.
 
 
+Frontend: Next.js on Vercel, HTML5 canvas for drawing
+Backend: Python FastAPI (deployed as Vercel serverless functions or a separate Railway/Fly.io service)
+ML: TensorFlow + Keras CNN, exported to ONNX, loaded at startup
+DB: Supabase (Postgres) for high scores; free tier is generous and works great with Next.js
 
-5/8/26
-1.create a labeled dataset of my handwriting characters
-    how to store data ?
-
-2.segmentation
-3.normalization
-
-transkribus?
-
-4. machine learning model (tensorflow or pytorch)
-
--> data collection, preprocessing, training, evaluation
-
-https://www.youtube.com/watch?v=uTBtEx8G3Ds
-https://github.com/SumitJainUTD/handwritten-digits-app-ai
-https://www.geeksforgeeks.org/machine-learning/handwritten-digit-recognition-using-neural-network/
-
-
-store the trained model -- have it up and running every time app launches?
-
+use a backtracking algorithm to generate a fully solved board, then remove cells while ensuring a unique solution remains solvable. Libraries like py-sudoku or sudoku-solver on PyPI handle this well.
 
