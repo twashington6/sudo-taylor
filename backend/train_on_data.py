@@ -8,6 +8,7 @@ import scipy.ndimage as ndi
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.utils import class_weight
 
 # load the saved MNIST model
 model = keras.models.load_model('backend/data/mnist_model.keras')
@@ -44,11 +45,29 @@ val_data = datagen.flow_from_directory(
     subset='validation'
 )
 
+# calculate weights to compensate for imbalance
+labels = train_data.classes
+weights = class_weight.compute_class_weight(
+    class_weight='balanced',
+    classes=np.unique(labels),
+    y=labels
+)
+class_weights = dict(enumerate(weights))
+
+
 # freeze early layers to preserve learned features
 # the early conv layers already know how to see edges/curves from MNIST
-# we only want to adjust the final classification layers for your style
-model.layers[0].trainable = False  # freeze conv block 1
-model.layers[2].trainable = False  # freeze conv block 2
+# we only want to adjust the final classification layers for style
+#model.layers[0].trainable = False  # freeze conv block 1
+#model.layers[2].trainable = False  # freeze conv block 2
+
+# only unfreeze the dense layers at the end
+for layer in model.layers:
+    layer.trainable = False
+
+model.layers[-1].trainable = True  # output layer
+model.layers[-2].trainable = True  # dropout
+model.layers[-3].trainable = True  # dense 128
 
 # recompile with a lower learning rate for fine-tuning
 model.compile(
@@ -57,13 +76,20 @@ model.compile(
     metrics=['accuracy']
 )
 
+early_stop = keras.callbacks.EarlyStopping(
+    monitor='val_accuracy',
+    patience=3,           # stop if no improvement for 3 epochs
+    restore_best_weights=True  # revert to best epoch automatically
+)
+
 # fine-tune on handwriting data
 model.fit(
     train_data,
     epochs=10,
-    validation_data=val_data
+    validation_data=val_data,
+    class_weight=class_weights, # handling class imbalance
+    callbacks=[early_stop]
 )
-
 
 # confusion matrix on validation set
 # get true labels and predictions from validation data
@@ -98,6 +124,20 @@ for _ in range(5):
     idx = np.unravel_index(cm_copy.argmax(), cm_copy.shape)
     print(f"  True: {idx[0]}  →  Predicted as: {idx[1]}  ({cm_copy[idx]} times)")
     cm_copy[idx] = 0
+
+
+# overall accuracy on validation set
+correct = sum(1 for t, p in zip(y_true, y_pred) if t == p)
+total = len(y_true)
+print(f"Overall accuracy: {correct}/{total} = {correct/total*100:.1f}%")
+
+# per digit accuracy
+print("\nPer digit accuracy:")
+for digit in range(10):
+    digit_mask = y_true == digit
+    digit_correct = sum((y_true[digit_mask] == y_pred[digit_mask]))
+    digit_total = sum(digit_mask)
+    print(f"  Digit {digit}: {digit_correct}/{digit_total} = {digit_correct/digit_total*100:.1f}%")
 
 # save the final model
 model.save('backend/data/final_model.keras')

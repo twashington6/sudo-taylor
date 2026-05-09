@@ -26,7 +26,7 @@ def collect_digit(digit):
     cv2.setMouseCallback(f'Draw digit: {digit}', draw)
     
     # find next available filename
-    existing = os.listdir(f'backend/data/my_handwriting/{digit}')
+    existing = os.listdir(f'backend/data/handwriting/{digit}')
     count = max([int(f.split('.')[0]) for f in existing if f.endswith('.png')], default=0) + 1
 
     while True:

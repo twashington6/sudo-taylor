@@ -6,3 +6,6 @@ Diagonal = correct predictions (you want these dark)
 Off-diagonal = mistakes (you want these empty/white)
 
 So if row 7, column 1 is dark, it means the model keeps misreading 7s as 1s -- and now know to draw more distinctive 7s in next data collection session.
+
+
+Add more samples to improve accuracy.... will be limited by number of entries in lowest class automatically.
