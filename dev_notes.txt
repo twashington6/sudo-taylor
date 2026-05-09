@@ -3,9 +3,15 @@
 
 
 Frontend: Next.js on Vercel, HTML5 canvas for drawing
-Backend: Python FastAPI (deployed as Vercel serverless functions or a separate Railway/Fly.io service)
-ML: TensorFlow + Keras CNN, exported to ONNX, loaded at startup
+(DONE) Backend: Python FastAPI (deployed as Vercel serverless functions or a separate Railway/Fly.io service)
+(DONE) ML: TensorFlow + Keras CNN, exported to ONNX, loaded at startup
 DB: Supabase (Postgres) for high scores; free tier is generous and works great with Next.js
 
 use a backtracking algorithm to generate a fully solved board, then remove cells while ensuring a unique solution remains solvable. Libraries like py-sudoku or sudoku-solver on PyPI handle this well.
 
+
+
+# press ctrl+c in terminal to stop the server when done
+# for full app, will need to run both backend and frontend servers:
+# 1. in backend folder: uvicorn main:app --reload
+# 2. in frontend folder: npm run dev
