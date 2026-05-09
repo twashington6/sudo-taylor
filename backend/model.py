@@ -8,9 +8,6 @@ from tensorflow.keras import layers
 import numpy as np
 import matplotlib.pyplot as plt  # visualize digits during development
 
-import os
-import cv2  # image preprocessing / segmentation
-
 
 print(tf.__version__)
 

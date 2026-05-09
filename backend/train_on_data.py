@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
+import scipy.ndimage as ndi
 
 # load the saved MNIST model
 model = keras.models.load_model('backend/data/mnist_model.keras')
@@ -18,8 +18,9 @@ datagen = ImageDataGenerator(
     validation_split=0.2
 )
 
+# create training set
 train_data = datagen.flow_from_directory(
-    'backend/data/my_handwriting',
+    'backend/data/handwriting',
     target_size=(28, 28),
     color_mode='grayscale',
     class_mode='sparse',
@@ -27,8 +28,9 @@ train_data = datagen.flow_from_directory(
     subset='training'
 )
 
+# create validation set
 val_data = datagen.flow_from_directory(
-    'backend/data/my_handwriting',
+    'backend/data/handwriting',
     target_size=(28, 28),
     color_mode='grayscale',
     class_mode='sparse',
@@ -36,25 +38,26 @@ val_data = datagen.flow_from_directory(
     subset='validation'
 )
 
-# 11. FREEZE EARLY LAYERS, RETRAIN LAST FEW
+# freeze early layers to preserve learned features
 # the early conv layers already know how to see edges/curves from MNIST
 # we only want to adjust the final classification layers for your style
 model.layers[0].trainable = False  # freeze conv block 1
 model.layers[2].trainable = False  # freeze conv block 2
 
+# recompile with a lower learning rate for fine-tuning
 model.compile(
     optimizer=keras.optimizers.Adam(learning_rate=0.0001),  # smaller lr for fine-tuning
     loss='sparse_categorical_crossentropy',
     metrics=['accuracy']
 )
 
-# 12. FINE-TUNE
+# fine-tune on handwriting data
 model.fit(
     train_data,
     epochs=10,
     validation_data=val_data
 )
 
-# 13. SAVE FINAL MODEL
+# save the final model
 model.save('backend/data/final_model.keras')
 print("Fine-tuned model saved.")
