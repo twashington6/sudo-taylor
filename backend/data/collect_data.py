@@ -1,3 +1,5 @@
+# collect handwritten digit samples
+
 # imports
 import cv2
 import numpy as np

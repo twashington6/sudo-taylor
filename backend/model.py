@@ -1,3 +1,5 @@
+# tensorflow + keras CNN model on MNIST data --> exported
+
 # imports
 from xml.parsers.expat import model
 
@@ -12,7 +14,6 @@ import matplotlib.pyplot as plt  # visualize digits during development
 print(tf.__version__)
 
 
-# tensorflow + keras CNN model --> exported to ONNX --> load at app startup
 
 # 1. loading MNIST  dataset to work off of; will augment with my own data later
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()

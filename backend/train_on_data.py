@@ -1,3 +1,5 @@
+# train model from model.py on the handwriting data collected with collect_data.py --> obtain fine-tuned model final_model.keras
+
 # imports
 import tensorflow as tf
 from tensorflow import keras
