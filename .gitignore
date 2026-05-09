@@ -1,5 +1,20 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# python
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/data/mnist_model.keras
+backend/data/final_model.keras
+
+# handwriting images
+backend/data/handwriting/
+
+# os
+.DS_Store
+Thumbs.db
+
+
 # dependencies
 /node_modules
 /.pnp
