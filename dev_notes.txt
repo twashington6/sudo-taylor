@@ -1,4 +1,3 @@
-5/9/26
 85% accuracy for final_model.keras (on my handwriting) acheived.
 
 
@@ -15,3 +14,10 @@ use a backtracking algorithm to generate a fully solved board, then remove cells
 # for full app, will need to run both backend and frontend servers:
 # 1. in backend folder: uvicorn main:app --reload
 # 2. in frontend folder: npm run dev
+
+FILES: 
+collect_data.py  ->  handwriting/ folder (raw data)
+model.py         ->  mnist_model.keras (base knowledge)
+train_on_data.py ->  final_model.keras (personalized model)
+main.py          ->  serves final_model.keras to the world
+frontend         ->  talks to main.py via HTTP

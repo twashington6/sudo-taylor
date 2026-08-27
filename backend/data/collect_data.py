@@ -1,9 +1,27 @@
 # collect handwritten digit samples
+# the output feeds directly into train_on_data.py.
 
 # imports
 import cv2
+# draws the canvas window, handles mouse events
+
 import numpy as np
+# creates the blank canvas (array of zeros = black)
+
 import os
+# creates the folder structure for each digit
+
+
+# WHY 28x28: MNIST is 28x28. Training data must match
+# the format the model was trained on. This is non-negotiable --
+# mismatched input shapes will crash the model or produce garbage.
+
+# MNIST digits are clean, centered, machine-scanned.
+# The sudoku app will receive messy, real handwriting from a canvas.
+# The gap between "MNIST handwriting" and "ACTUAL handwriting"
+# is exactly what fine-tuning bridges.
+# The more samples collected, the better the model can learn handwriting style.
+
 
 # creates folders data/0, data/1, ... data/9
 for i in range(10):

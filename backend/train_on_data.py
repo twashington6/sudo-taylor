@@ -1,5 +1,11 @@
 # train model from model.py on the handwriting data collected with collect_data.py --> obtain fine-tuned model final_model.keras
 
+# Fine-tuning = take a model that already knows something,
+# teach it something more specific without forgetting what it knew.
+# Classic example: a model trained on ImageNet (1M photos)
+# fine-tuned to recognize specific dog breeds.
+# MY case: MNIST -> my specific handwriting style.
+
 # imports
 import tensorflow as tf
 from tensorflow import keras
@@ -67,6 +73,13 @@ class_weights = dict(enumerate(weights))
 for layer in model.layers:
     layer.trainable = False
 
+
+# WHY freeze early layers:
+# Conv layers learn VISUAL PRIMITIVES: edges, curves, corners.
+# These are universal -- a curve is a curve regardless of who drew it.
+# No need to relearn from scratch. Freezing preserves this knowledge.
+# Only the final Dense layers need to adjust to personal style.
+
 model.layers[-1].trainable = True  # output layer
 model.layers[-2].trainable = True  # dropout
 model.layers[-3].trainable = True  # dense 128
@@ -74,6 +87,11 @@ model.layers[-3].trainable = True  # dense 128
 # recompile with a lower learning rate for fine-tuning
 model.compile(
     optimizer=keras.optimizers.Adam(learning_rate=0.0001),  # smaller lr for fine-tuning
+    # WHY a smaller learning rate for fine-tuning (0.0001 vs 0.001):
+    # The model already has good weights from MNIST.
+    # A large learning rate would take big steps and overwrite that knowledge.
+    # Small steps = subtle adjustments = keeps MNIST knowledge intact.
+    
     loss='sparse_categorical_crossentropy',
     metrics=['accuracy']
 )
@@ -90,7 +108,19 @@ model.fit(
     epochs=10,
     validation_data=val_data,
     class_weight=class_weights, # handling class imbalance
+    # class_weight -- BALANCING:
+    # If have 100 zeros but only 40 fives,
+    # the model sees zeros 2.5x more often and biases toward them.
+    # class_weight tells the model "mistakes on rare classes cost more"
+    # effectively leveling the playing field.
+
     callbacks=[early_stop]
+    # EarlyStopping:
+    # Monitors val_accuracy. If it doesn't improve for "patience" epochs,
+    # training stops and reverts to the best weights.
+    # Prevents the model from training past its peak and overfitting.
+    # restore_best_weights=True is crucial -- without it you keep
+    # the final weights, not the best ones.
 )
 
 # confusion matrix on validation set
