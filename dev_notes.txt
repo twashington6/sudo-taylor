@@ -22,6 +22,8 @@ train_on_data.py ->  final_model.keras (personalized model)
 main.py          ->  serves final_model.keras to the world
 frontend         ->  talks to main.py via HTTP
 
+user flutter and dart for frontend development?
+
 
 need a component that has solavle sudoku puzzles
     eventually expand to extreme 1-16 puzzles?
