@@ -21,3 +21,10 @@ model.py         ->  mnist_model.keras (base knowledge)
 train_on_data.py ->  final_model.keras (personalized model)
 main.py          ->  serves final_model.keras to the world
 frontend         ->  talks to main.py via HTTP
+
+
+need a component that has solavle sudoku puzzles
+    eventually expand to extreme 1-16 puzzles?
+"notes" component-- making i can make it so that the user can write in "red" whatever they want and the model will ignore those
+i think that the model needs to only evaluate the final "solved" puzzle for mistakes, and compare that with a reference to determine accuracy
+i can mae the "notes" disappear before passing the player's puzzle on to the model?
