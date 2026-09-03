@@ -1,3 +1,4 @@
+# THIRD STEP
 # train model from model.py on the handwriting data collected with collect_data.py --> obtain fine-tuned model final_model.keras
 
 # Fine-tuning = take a model that already knows something,

@@ -1,3 +1,4 @@
+# FIRST STEP: GET THE BASE MODEL
 # tensorflow + keras CNN model on MNIST data --> exported
 
 # imports
@@ -90,7 +91,7 @@ model = keras.Sequential([
     # looking for patterns. 32 means 32 different filters --
     # each filter learns to detect something different
     # (one might find horizontal edges, another finds curves, etc).
-    # 'relu' = Rectified Linear Unit. The activation function.
+    # "relu" = Rectified Linear Unit. The activation function.
     # It just does max(0, x) -- kills negative values.
     # WHY relu: without activation functions, stacking layers does nothing
     # (linear + linear = linear). relu adds non-linearity,
@@ -114,7 +115,7 @@ model = keras.Sequential([
     
 
     # --- flatten + classify ---
-    layers.Flatten(),              # unrolls 2D into 1D
+    layers.Flatten(), # unrolls 2D into 1D
     # Unrolls the 2D feature maps into a 1D array.
     # Think of it as: we've extracted all the visual features,
     # now we need to feed them into a regular classifier.
@@ -125,8 +126,8 @@ model = keras.Sequential([
     # and starts making sense of them as a whole digit.
     # 128 = number of neurons (a hyperparameter that can be tuned).
 
-    layers.Dropout(0.5),           # randomly turns off 50% of neurons during training
-                                   # prevents memorizing, forces generalization
+    layers.Dropout(0.5), # randomly turns off 50% of neurons during training
+                         # prevents memorizing, forces generalization
     # During training, randomly turns off 50% of neurons each pass.
     # WHY: forces the network not to rely on any single neuron.
     # Prevents OVERFITTING -- memorizing training data instead of
@@ -166,16 +167,15 @@ model.compile(
 
 
 
-
 # 7. train on mnist
 history = model.fit(
     x_train, y_train,
-    epochs=5,              # 5 passes through the full dataset
+    epochs=5, # 5 passes through the full dataset
     # One epoch = the model sees every training sample once.
     # 5 epochs = 5 full passes through 60,000 images.
     # More epochs isn't always better -- can overfit.
 
-    batch_size=64,         # process 64 images at a time
+    batch_size=64, # process 64 images at a time
     # Instead of updating weights after every single image (slow)
     # or after all 60k images (memory intensive),
     # we update after every 64 images. Good balance.

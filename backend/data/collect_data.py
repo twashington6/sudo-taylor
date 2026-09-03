@@ -1,3 +1,4 @@
+# SECOND STEP
 # collect handwritten digit samples
 # the output feeds directly into train_on_data.py.
 
