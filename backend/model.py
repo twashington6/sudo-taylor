@@ -87,17 +87,18 @@ model = keras.Sequential([
     # --- block 1: first conv layer ---
     # 32 filters, each 3x3, looks for basic features (edges, curves)
     layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+    # Conv2d = (B,C,H,W) = (batch, channels, height, width)
     # THE KEY LAYER. Conv2D slides a small window (3x3) across the image,
     # looking for patterns. 32 means 32 different filters --
     # each filter learns to detect something different
     # (one might find horizontal edges, another finds curves, etc).
-    # "relu" = Rectified Linear Unit. The activation function.
-    # It just does max(0, x) -- kills negative values.
+    # "relu" is the activation function; just does max(0, x) -- kills negative values.
     # WHY relu: without activation functions, stacking layers does nothing
     # (linear + linear = linear). relu adds non-linearity,
     # letting the network learn complex patterns.
     
-    layers.MaxPooling2D((2, 2)),   # shrinks the image by half
+
+    layers.MaxPooling2D((2, 2)),   # shrinks the image by half; ensures that we keep the strongest responses
     # Shrinks the image by half by taking the MAX value in each 2x2 block.
     # WHY: makes the network less sensitive to exact position of features.
     # A "7" is still a "7" whether it's slightly left or right.
@@ -106,18 +107,19 @@ model = keras.Sequential([
     # --- block 2: second conv layer ---
     # 64 filters, looks for more complex features (loops, corners)
     layers.Conv2D(64, (3, 3), activation='relu'),
+    # Conv2d = (B,C,H,W) = (batch, channels, height, width)
     # Second conv layer with 64 filters (more than first).
     # WHY more filters: early layers detect simple things (edges).
     # Later layers combine those into complex things (loops, corners).
     # More filters = more capacity to learn complex combinations.
 
-    layers.MaxPooling2D((2, 2)),
+    layers.MaxPooling2D((2, 2)), # ensures that we keep the strongest responses
     
 
     # --- flatten + classify ---
     layers.Flatten(), # unrolls 2D into 1D
     # Unrolls the 2D feature maps into a 1D array.
-    # Think of it as: we've extracted all the visual features,
+    # Think of it as: we've extracted all the visual features, 
     # now we need to feed them into a regular classifier.
 
     layers.Dense(128, activation='relu'),
