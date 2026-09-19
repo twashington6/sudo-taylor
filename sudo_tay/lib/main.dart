@@ -21,7 +21,7 @@ class SudoTayApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sudo-Tay',
+      title: 'Sudo-Taylor',
       theme: ThemeData.dark(),
       home: const DrawingPage(),
     );
@@ -42,5 +42,5 @@ class _DrawingPageState extends State<DrawingPage> {
   // null acts as a "pen up" signal, which separates the strokes
   final List<Offset?> points = [];
 
-  
+
 }
