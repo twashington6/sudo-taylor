@@ -16,7 +16,6 @@ Thumbs.db
 
 
 # dependencies
-/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -28,9 +27,6 @@ Thumbs.db
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
 
 # production
 /build
@@ -48,9 +44,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# Flutter
+sudoku_app/.dart_tool/
+sudoku_app/build/
+sudoku_app/.flutter-plugins
+sudoku_app/.flutter-plugins-dependencies
+sudoku_app/windows/flutter/generated_plugins.cmake
+sudoku_app/windows/flutter/generated_plugin_registrant.cc
