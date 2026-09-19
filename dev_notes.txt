@@ -1,7 +1,7 @@
 85% accuracy for final_model.keras (on my handwriting) acheived.
 
 
-Frontend: Next.js on Vercel, HTML5 canvas for drawing.. user flutter and dart?
+Frontend: user flutter and dart. flutter's canvas widget "CustomPainter" for drawing.
 (DONE) Backend: Python FastAPI (deployed as Vercel serverless functions or a separate Railway/Fly.io service)
 (DONE) ML: TensorFlow + Keras CNN, exported to ONNX, loaded at startup
 DB: Supabase (Postgres) for high scores; free tier is generous and works great with Next.js
