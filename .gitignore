@@ -51,3 +51,7 @@ sudoku_app/.flutter-plugins
 sudoku_app/.flutter-plugins-dependencies
 sudoku_app/windows/flutter/generated_plugins.cmake
 sudoku_app/windows/flutter/generated_plugin_registrant.cc
+
+
+AGENTS.md
+CLAUDE.md
