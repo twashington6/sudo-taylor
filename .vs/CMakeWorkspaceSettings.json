@@ -1,0 +1,4 @@
+{
+  "enableCMake": true,
+  "sourceDirectory": "sudo_tay\\windows"
+}

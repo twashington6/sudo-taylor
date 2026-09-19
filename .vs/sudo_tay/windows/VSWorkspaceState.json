@@ -1,0 +1,8 @@
+{
+  "OutputFoldersPerTargetSystem": {
+    "Local Machine": [
+      "sudo_tay\\windows\\out\\build\\x64-Debug",
+      "sudo_tay\\windows\\out\\install\\x64-Debug"
+    ]
+  }
+}

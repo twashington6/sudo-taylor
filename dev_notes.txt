@@ -12,6 +12,8 @@ DB: Supabase (Postgres) for high scores; free tier is generous and works great w
 # 1. in backend folder: uvicorn main:app --reload
 # 2. in frontend folder: npm run dev
 
+cd sudo_tay
+flutter run -d windows
 FILES: 
 collect_data.py  ->  handwriting/ folder (raw data)
 model.py         ->  mnist_model.keras (base knowledge)
